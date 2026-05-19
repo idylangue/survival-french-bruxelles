@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survival French Brussels</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f7f6f2;color:#1a1a1a;line-height:1.6;padding-bottom:70px}
+.hero{background:#1a3a2a;color:#fff;padding:2.5rem 1.5rem 2rem;text-align:center}
+.hero h1{font-family:'Playfair Display',serif;font-size:2rem;letter-spacing:-0.5px;margin-bottom:0.3rem}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.95rem;max-width:500px;margin:0.4rem auto 0}
+
+/* NAV — scrollable, starts from first item */
+.progress-nav{display:flex;background:#fff;border-bottom:1px solid #e5e5e0;overflow-x:auto;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;padding:0}
+.progress-nav::-webkit-scrollbar{display:none}
+.nav-btn{flex:0 0 auto;scroll-snap-align:start;padding:0.85rem 1rem;font-size:0.78rem;font-weight:500;color:#888;background:none;border:none;border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+.nav-btn.active{color:#1a3a2a;border-bottom-color:#1a3a2a}
+.nav-btn.done{color:#4a9060}
+.nav-btn .num{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:#e8e6df;font-size:0.68rem;margin-right:4px}
+.nav-btn.active .num{background:#1a3a2a;color:#fff}
+.nav-btn.done .num{background:#4a9060;color:#fff}
+
+/* Fixed home button on mobile */
+.home-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e8e6df;padding:0.6rem 1rem;display:flex;justify-content:space-between;align-items:center;z-index:100}
+.home-bar button{background:#1a3a2a;color:#fff;border:none;border-radius:7px;padding:0.5rem 1.1rem;font-size:0.82rem;font-weight:500;cursor:pointer}
+.home-bar .progress-label{font-size:0.78rem;color:#888}
+
+.section{display:none;padding:1.5rem 1rem;max-width:720px;margin:0 auto}
+.section.active{display:block}
+.section-title{font-family:'Playfair Display',serif;font-size:1.5rem;color:#1a3a2a;margin-bottom:0.3rem}
+.section-sub{font-size:0.88rem;color:#666;margin-bottom:1.5rem;padding-bottom:1rem;border-bottom:1px solid #e8e6df}
+.task-card{background:#fff;border:1px solid #e8e6df;border-radius:12px;padding:1.1rem 1.2rem;margin-bottom:0.9rem}
+.task-card h3{font-size:0.92rem;font-weight:500;color:#1a3a2a;margin-bottom:0.4rem}
+.task-card p{font-size:0.88rem;color:#333;line-height:1.6}
+.example-tag{display:inline-block;background:#e6f1fb;color:#185fa5;border-radius:6px;padding:2px 9px;font-size:0.78rem;margin-left:5px;font-weight:500}
+.word-pill{display:inline-block;background:#f4f3ee;border:1px solid #ddd;color:#333;border-radius:20px;padding:5px 14px;margin:3px;font-size:0.88rem;cursor:pointer;transition:all 0.15s}
+.word-pill:hover,.word-pill:active{background:#1a3a2a;color:#fff;border-color:#1a3a2a}
+.word-pill.selected{background:#1a3a2a;color:#fff;border-color:#1a3a2a}
+.word-pill.not-english{background:#f0ede6;color:#999;cursor:default;text-decoration:line-through;border-color:#ddd}
+.phrase-list{list-style:none;padding:0;margin:0}
+.phrase-list li{padding:0.6rem 0;border-bottom:1px solid #f0ede6;font-size:0.88rem;color:#333}
+.phrase-list li:last-child{border-bottom:none}
+.phrase-list li strong{color:#1a3a2a}
+.video-link-card{background:#fff;border:1px solid #e8e6df;border-radius:12px;padding:0.9rem 1.1rem;margin-bottom:0.7rem;display:flex;align-items:center;gap:0.9rem;text-decoration:none;color:#333;transition:all 0.15s}
+.video-link-card:active{border-color:#1a3a2a;background:#f9f8f4}
+.video-thumb{width:48px;height:36px;background:#1a3a2a;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+.video-info{flex:1}
+.video-info .vid-num{font-size:0.68rem;font-weight:500;color:#fff;background:#1a3a2a;border-radius:4px;padding:1px 6px;margin-right:5px}
+.video-info .vid-title{font-size:0.88rem;font-weight:500;color:#1a3a2a}
+.video-info .vid-sub{font-size:0.77rem;color:#888;margin-top:1px}
+.quiz-q{background:#fff;border:1px solid #e8e6df;border-radius:12px;padding:1.2rem;margin-bottom:1rem}
+.quiz-q .q-text{font-size:0.92rem;font-weight:500;color:#1a1a1a;margin-bottom:0.9rem}
+.quiz-opts{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+@media(max-width:400px){.quiz-opts{grid-template-columns:1fr}}
+.quiz-opt{padding:0.6rem 0.8rem;background:#f9f8f4;border:1.5px solid #ddd;border-radius:8px;font-size:0.85rem;cursor:pointer;text-align:left;transition:all 0.15s;color:#333;width:100%}
+.quiz-opt:active{border-color:#1a3a2a;color:#1a3a2a}
+.quiz-opt.correct{background:#eef7f1;border-color:#4a9060;color:#1a4a2a;font-weight:500}
+.quiz-opt.wrong{background:#fdf0ee;border-color:#c0503a;color:#8a2a1a}
+.quiz-opt:disabled{cursor:default}
+.img-opts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}
+.img-opt{background:#f9f8f4;border:1.5px solid #ddd;border-radius:8px;padding:0.65rem 0.4rem;text-align:center;cursor:pointer;transition:all 0.15s}
+.img-opt:active{border-color:#1a3a2a}
+.img-opt.correct{background:#eef7f1;border-color:#4a9060}
+.img-opt.wrong{background:#fdf0ee;border-color:#c0503a}
+.img-opt .emoji{font-size:1.8rem;display:block;margin-bottom:3px}
+.img-opt .phrase{font-size:0.72rem;color:#666}
+.feedback{font-size:0.8rem;margin-top:7px;padding:6px 10px;border-radius:6px;display:none}
+.feedback.show{display:block}
+.feedback.ok{background:#eef7f1;color:#1a4a2a}
+.feedback.nope{background:#fdf0ee;color:#8a2a1a}
+.score-bar{background:#e8e6df;border-radius:20px;height:8px;overflow:hidden;margin:0.4rem 0 1rem}
+.score-fill{height:100%;background:#4a9060;border-radius:20px;transition:width 0.6s ease}
+.btn-primary{display:inline-block;background:#1a3a2a;color:#fff;border:none;padding:0.7rem 1.8rem;border-radius:8px;font-size:0.92rem;font-weight:500;cursor:pointer;margin-top:0.9rem;transition:background 0.2s;width:100%;text-align:center}
+.btn-primary:active{background:#2a5a3a}
+.farewell{text-align:center;padding:2rem 1rem}
+.farewell .big{font-family:'Playfair Display',serif;font-size:1.8rem;color:#1a3a2a;margin-bottom:0.7rem}
+.farewell p{color:#666;font-size:0.92rem;max-width:440px;margin:0 auto 1.2rem}
+.tip-box{background:#fff;border:1px solid #e8e6df;border-radius:12px;padding:1.1rem 1.2rem;text-align:left;margin-top:1rem}
+.tip-box h4{font-size:0.8rem;color:#888;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.4rem}
+.tip-box p{font-size:0.85rem;color:#333}
+.reveal-msg{margin-top:9px;font-size:0.8rem;color:#666;display:none;padding:7px 11px;background:#f4f3ee;border-radius:8px}
+.reveal-msg.show{display:block}
+
+/* Quiz explanation box */
+.quiz-note{background:#fef9ec;border:1px solid #f5d877;border-radius:8px;padding:0.7rem 1rem;font-size:0.82rem;color:#7a5c00;margin-bottom:1rem}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Survival French Brussels</h1>
+  <p>Open your ears, open your eyes — jump into French!</p>
+</div>
+
+<div class="progress-nav" id="nav">
+  <button class="nav-btn active" onclick="goTo(0)"><span class="num">1</span>Welcome</button>
+  <button class="nav-btn" onclick="goTo(1)"><span class="num">2</span>City</button>
+  <button class="nav-btn" onclick="goTo(2)"><span class="num">3</span>Host Family</button>
+  <button class="nav-btn" onclick="goTo(3)"><span class="num">4</span>Brussels Slang</button>
+  <button class="nav-btn" onclick="goTo(4)"><span class="num">5</span>Quiz</button>
+  <button class="nav-btn" onclick="goTo(5)"><span class="num">6</span>See you!</button>
+</div>
+
+<!-- Fixed bottom bar -->
+<div class="home-bar">
+  <button onclick="goTo(0)">↩ Home</button>
+  <span class="progress-label" id="progress-label">Section 1 / 6</span>
+  <button onclick="goNext()">Next →</button>
+</div>
+
+<!-- SECTION 1: WELCOME -->
+<div id="s0" class="section active">
+  <div class="section-title">Welcome! 👋</div>
+  <div class="section-sub">Your self-guided introduction to Survival French.</div>
+  <div class="task-card">
+    <h3>🎯 What is Survival French?</h3>
+    <p>The goal is simple: activate your French. Start speaking, even imperfectly. Notice the language around you. Memorise key phrases to communicate in Brussels — in transport, shops, and with your host family.</p>
+  </div>
+  <div class="task-card">
+    <h3>📅 This week's challenge</h3>
+    <p>For one week, keep your eyes and ears open. Collect French words from real life — signs, announcements, conversations, your host family.</p>
+  </div>
+  <div class="task-card">
+    <h3>🗺️ How to use this guide</h3>
+    <p>Go through each section using the tabs above. Watch the videos, complete the activities, and take the quizzes. No rush — go at your own pace.</p>
+  </div>
+</div>
+
+<!-- SECTION 2: CITY -->
+<div id="s1" class="section">
+  <div class="section-title">City Observation 🚇</div>
+  <div class="section-sub">Pay attention to the announcements in public transport — they are your French classroom this week!</div>
+  <div class="task-card">
+    <h3>🚉 Metro, Tram & Bus stations</h3>
+    <p>Memorise the names of <strong>3 stations</strong> near where you live or commute. Listen to the announcements and try to repeat them. <span class="example-tag">e.g. Montgomery</span></p>
+  </div>
+  <div class="task-card">
+    <h3>🚌 Transport lines</h3>
+    <p>Memorise <strong>3 line numbers</strong> you use regularly — metro, tram, or bus. Listen when they are announced and try to say the number in French.</p>
+  </div>
+  <div class="task-card">
+    <h3>👀 Tap the words also used in English!</h3>
+    <p style="margin-bottom:0.8rem;font-size:0.82rem;color:#666">Some of these are French words used in English — tap the ones you recognise!</p>
+    <div>
+      <span class="word-pill" onclick="tapWord(this,'yes')">rendezvous</span>
+      <span class="word-pill" onclick="tapWord(this,'yes')">déjà vu</span>
+      <span class="word-pill" onclick="tapWord(this,'yes')">entrepreneur</span>
+      <span class="word-pill" onclick="tapWord(this,'yes')">bon appétit</span>
+      <span class="word-pill" onclick="tapWord(this,'yes')">croissant</span>
+      <span class="word-pill" onclick="tapWord(this,'yes')">café</span>
+      <span class="word-pill" onclick="tapWord(this,'yes')">faux pas</span>
+      <span class="word-pill" onclick="tapWord(this,'no')">manger</span>
+      <span class="word-pill" onclick="tapWord(this,'no')">voyager</span>
+      <span class="word-pill" onclick="tapWord(this,'no')">parler</span>
+      <span class="word-pill" onclick="tapWord(this,'no')">écrire</span>
+      <span class="word-pill" onclick="tapWord(this,'no')">écouter</span>
+    </div>
+    <div class="reveal-msg" id="word-msg"></div>
+  </div>
+</div>
+
+<!-- SECTION 3: HOST FAMILY -->
+<div id="s2" class="section">
+  <div class="section-title">Your Host Family 🏠</div>
+  <div class="section-sub">Your host family is your best French resource. Don't be shy — they want to help!</div>
+  <div class="task-card">
+    <h3>💬 Your word of the week</h3>
+    <p>Listen carefully at home. Memorise <strong>1 phrase or 1 word</strong> you hear regularly — or ask your host family: <em>"What is your favourite word in French?"</em></p>
+    <div style="margin-top:12px">
+      <input type="text" placeholder='e.g. "super !" or "bonne journée"' style="width:100%;padding:8px 12px;border:1px solid #ddd;border-radius:8px;font-size:0.9rem;color:#333">
+      <p style="font-size:0.75rem;color:#999;margin-top:5px">Write it down — practice saying it aloud!</p>
+    </div>
+  </div>
+  <div class="task-card">
+    <h3>🗣️ Try these with your host family</h3>
+    <ul class="phrase-list">
+      <li><strong>Bonjour !</strong> — Say good morning in French every day this week</li>
+      <li><strong>Merci beaucoup !</strong> — Thank them for meals, help, anything</li>
+      <li><strong>C'est délicieux !</strong> — Say it about their cooking (only if you mean it)</li>
+      <li><strong>Comment on dit... ?</strong> — Ask "how do you say...?"</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SECTION 4: BRUSSELS SLANG -->
+<div id="s3" class="section">
+  <div class="section-title">Brussels Expressions 🧇</div>
+  <div class="section-sub">Watch these 4 short videos about real Belgian expressions. Then you'll be tested — good luck!</div>
+
+  <a class="video-link-card" href="https://www.youtube.com/watch?v=ZywBCjTBKxQ" target="_blank">
+    <div class="video-thumb">▶️</div>
+    <div class="video-info">
+      <span class="vid-num">1</span><span class="vid-title">Le pain français</span>
+      <div class="vid-sub">Watch on YouTube →</div>
+    </div>
+  </a>
+  <a class="video-link-card" href="https://www.youtube.com/watch?v=38mD11oZK0I" target="_blank">
+    <div class="video-thumb">▶️</div>
+    <div class="video-info">
+      <span class="vid-num">2</span><span class="vid-title">S'il vous plaît</span>
+      <div class="vid-sub">Watch on YouTube →</div>
+    </div>
+  </a>
+  <a class="video-link-card" href="https://www.youtube.com/watch?v=zNUNhv91cUI" target="_blank">
+    <div class="video-thumb">▶️</div>
+    <div class="video-info">
+      <span class="vid-num">3</span><span class="vid-title">Drache</span>
+      <div class="vid-sub">Watch on YouTube →</div>
+    </div>
+  </a>
+  <a class="video-link-card" href="https://www.youtube.com/watch?v=tYFVDSbdEY0" target="_blank">
+    <div class="video-thumb">▶️</div>
+    <div class="video-info">
+      <span class="vid-num">4</span><span class="vid-title">Non peut-être — how Belgians say a strong "yes" (paradoxically!)</span>
+      <div class="vid-sub">Watch on YouTube →</div>
+    </div>
+  </a>
+</div>
+
+<!-- SECTION 5: QUIZ -->
+<div id="s4" class="section">
+  <div class="section-title">Quiz Time! 🎯</div>
+  <div class="section-sub">Test what you've learned. Bonne chance !</div>
+
+  <div class="quiz-note">
+    💡 <strong>Tip:</strong> Bonjour / Bonsoir = when you <strong>arrive</strong>. Bonne journée / Bonne soirée = when you <strong>leave</strong>.
+  </div>
+
+  <div style="margin-bottom:1rem">
+    <div style="display:flex;justify-content:space-between;font-size:0.8rem;color:#888;margin-bottom:4px">
+      <span>Score</span><span id="score-txt">0 / 10</span>
+    </div>
+    <div class="score-bar"><div class="score-fill" id="score-fill" style="width:0%"></div></div>
+  </div>
+
+  <div class="quiz-q" id="q1">
+    <div class="q-text">1. In Belgian French, what do people call a baguette?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q1')">Un croissant</button>
+      <button class="quiz-opt" onclick="ans(this,'q1')" data-correct>Un pain français</button>
+      <button class="quiz-opt" onclick="ans(this,'q1')">Une ficelle</button>
+      <button class="quiz-opt" onclick="ans(this,'q1')">Un pistolet</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <div class="quiz-q" id="q2">
+    <div class="q-text">2. In Belgium, "s'il vous plaît" can also mean...</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q2')">Goodbye</button>
+      <button class="quiz-opt" onclick="ans(this,'q2')">Thank you</button>
+      <button class="quiz-opt" onclick="ans(this,'q2')" data-correct>Here you go / You're welcome</button>
+      <button class="quiz-opt" onclick="ans(this,'q2')">Excuse me</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <div class="quiz-q" id="q3">
+    <div class="q-text">3. What does "une drache" mean in Brussels?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q3')">A delicious waffle</button>
+      <button class="quiz-opt" onclick="ans(this,'q3')" data-correct>A heavy downpour / rainstorm</button>
+      <button class="quiz-opt" onclick="ans(this,'q3')">A cold beer</button>
+      <button class="quiz-opt" onclick="ans(this,'q3')">A traffic jam</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <div class="quiz-q" id="q4">
+    <div class="q-text">4. "Non peut-être !" in Belgian French actually expresses...</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q4')">Doubt or uncertainty</button>
+      <button class="quiz-opt" onclick="ans(this,'q4')">A polite refusal</button>
+      <button class="quiz-opt" onclick="ans(this,'q4')" data-correct>Strong agreement / emphatic "yes!"</button>
+      <button class="quiz-opt" onclick="ans(this,'q4')">A question</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <div class="quiz-q" id="q5">
+    <div class="q-text">5. 🏠 You are talking about where you live. Which phrase?</div>
+    <div class="img-opts">
+      <button class="img-opt" data-correct-img onclick="imgAns(this,'q5')"><span class="emoji">🏠</span><span class="phrase">J'habite à...</span></button>
+      <button class="img-opt" onclick="imgAns(this,'q5')"><span class="emoji">✈️</span><span class="phrase">Je viens de...</span></button>
+      <button class="img-opt" onclick="imgAns(this,'q5')"><span class="emoji">🙋</span><span class="phrase">Je m'appelle...</span></button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <div class="quiz-q" id="q6">
+    <div class="q-text">6. 🙋 You are introducing your name. Which phrase?</div>
+    <div class="img-opts">
+      <button class="img-opt" onclick="imgAns(this,'q6')"><span class="emoji">🏠</span><span class="phrase">J'habite à...</span></button>
+      <button class="img-opt" onclick="imgAns(this,'q6')"><span class="emoji">✈️</span><span class="phrase">Je viens de...</span></button>
+      <button class="img-opt" data-correct-img onclick="imgAns(this,'q6')"><span class="emoji">🙋</span><span class="phrase">Je m'appelle...</span></button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <div class="quiz-q" id="q7">
+    <div class="q-text">7. ✈️ You are telling someone which country you are from. Which phrase?</div>
+    <div class="img-opts">
+      <button class="img-opt" onclick="imgAns(this,'q7')"><span class="emoji">🏠</span><span class="phrase">J'habite à...</span></button>
+      <button class="img-opt" data-correct-img onclick="imgAns(this,'q7')"><span class="emoji">✈️</span><span class="phrase">Je viens de...</span></button>
+      <button class="img-opt" onclick="imgAns(this,'q7')"><span class="emoji">🙋</span><span class="phrase">Je m'appelle...</span></button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <div class="quiz-q" id="q8">
+    <div class="q-text">8. You arrive at your host family's house in the morning. What do you say?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q8')" data-correct>Bonjour !</button>
+      <button class="quiz-opt" onclick="ans(this,'q8')">Bonsoir !</button>
+      <button class="quiz-opt" onclick="ans(this,'q8')">Bonne journée !</button>
+      <button class="quiz-opt" onclick="ans(this,'q8')">Bonne soirée !</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <div class="quiz-q" id="q9">
+    <div class="q-text">9. You are leaving the house at 9pm. What do you say?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q9')">Bonjour !</button>
+      <button class="quiz-opt" onclick="ans(this,'q9')">Bonsoir !</button>
+      <button class="quiz-opt" onclick="ans(this,'q9')">Bonne journée !</button>
+      <button class="quiz-opt" onclick="ans(this,'q9')" data-correct>Bonne soirée !</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <div class="quiz-q" id="q10">
+    <div class="q-text">10. You are leaving home in the morning for school. What do you say?</div>
+    <div class="quiz-opts">
+      <button class="quiz-opt" onclick="ans(this,'q10')">Bonjour !</button>
+      <button class="quiz-opt" onclick="ans(this,'q10')">Bonsoir !</button>
+      <button class="quiz-opt" onclick="ans(this,'q10')" data-correct>Bonne journée !</button>
+      <button class="quiz-opt" onclick="ans(this,'q10')">Bonne soirée !</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <div id="quiz-result" style="display:none;margin-top:1.2rem;text-align:center;padding:1.4rem;background:#fff;border-radius:12px;border:1px solid #e8e6df">
+    <div style="font-size:2.3rem;margin-bottom:0.4rem" id="result-emoji">🎉</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#1a3a2a;margin-bottom:0.3rem" id="result-title">Excellent!</div>
+    <div style="font-size:0.88rem;color:#666" id="result-msg">You're ready for Brussels!</div>
+  </div>
+</div>
+
+<!-- SECTION 6: SEE YOU -->
+<div id="s5" class="section">
+  <div class="farewell">
+    <div class="big">See you next week! 🌟</div>
+    <p>You've completed your Survival French observation guide. Now go out there, open your ears, and jump into speaking French!</p>
+    <div style="display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-top:1rem">
+      <span class="word-pill selected">👂 Listen</span>
+      <span class="word-pill selected">👀 Observe</span>
+      <span class="word-pill selected">🗣️ Speak</span>
+      <span class="word-pill selected">😄 Have fun!</span>
+    </div>
+    <div class="tip-box" style="margin-top:1.5rem">
+      <h4>Your weekly checklist</h4>
+      <p>✅ 3 station names memorised &nbsp;·&nbsp; ✅ 3 line numbers known &nbsp;·&nbsp; ✅ 1 family phrase collected &nbsp;·&nbsp; ✅ 4 Brussels videos watched &nbsp;·&nbsp; ✅ Quiz done</p>
+    </div>
+    <div class="tip-box" style="border-color:#c0dfc9;margin-top:0.8rem">
+      <h4 style="color:#1a4a2a">Belgian bonus 🇧🇪</h4>
+      <p>If it rains this week — and it probably will — try saying <strong>"Quelle drache !"</strong> to your host family. Watch their reaction! 😄</p>
+    </div>
+  </div>
+</div>
+
+<script>
+var current=0,score=0,answered={};
+var sections=document.querySelectorAll('.section');
+var navBtns=document.querySelectorAll('.nav-btn');
+var totalSections=6;
+
+function goTo(i){
+  sections[current].classList.remove('active');
+  navBtns[current].classList.remove('active');
+  if(i>current)navBtns[current].classList.add('done');
+  current=i;
+  sections[i].classList.add('active');
+  navBtns[i].classList.add('active');
+  // Scroll nav to show active button
+  var btn=navBtns[i];
+  var nav=document.getElementById('nav');
+  nav.scrollLeft=btn.offsetLeft-nav.offsetWidth/2+btn.offsetWidth/2;
+  window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('progress-label').textContent='Section '+(i+1)+' / '+totalSections;
+}
+
+function goNext(){
+  if(current<totalSections-1)goTo(current+1);
+}
+
+function tapWord(el,type){
+  if(el.classList.contains('selected')||el.classList.contains('not-english'))return;
+  var msg=document.getElementById('word-msg');
+  if(type==='yes'){
+    el.classList.add('selected');
+    msg.textContent='Yes! "'+el.textContent+'" is used in English too.';
+  } else {
+    el.classList.add('not-english');
+    msg.textContent='"'+el.textContent+'" is a French verb — it stayed in French and isn\'t used in English!';
+  }
+  msg.className='reveal-msg show';
+  var all=document.querySelectorAll('#s1 .word-pill');
+  var done=0;
+  all.forEach(function(p){if(p.classList.contains('selected')||p.classList.contains('not-english'))done++;});
+  if(done>=12)msg.textContent='Great job! The 7 words on the left are used in English. The verbs (manger, voyager, parler, écrire, écouter) stayed in French.';
+}
+
+function ans(btn,qid){
+  if(answered[qid])return;
+  answered[qid]=true;
+  var isCorrect=btn.getAttribute('data-correct')!==null;
+  btn.closest('.quiz-q').querySelectorAll('.quiz-opt').forEach(function(o){
+    o.disabled=true;
+    if(o.getAttribute('data-correct')!==null)o.classList.add('correct');
+  });
+  if(!isCorrect)btn.classList.add('wrong');
+  var fb=document.getElementById('fb-'+qid);
+  if(isCorrect){score++;fb.textContent='✅ Correct!';fb.className='feedback show ok';}
+  else{fb.textContent='❌ Not quite — the correct answer is highlighted in green.';fb.className='feedback show nope';}
+  updateScore();checkDone();
+}
+
+function imgAns(btn,qid){
+  if(answered[qid])return;
+  answered[qid]=true;
+  var isCorrect=btn.getAttribute('data-correct-img')!==null;
+  btn.closest('.quiz-q').querySelectorAll('.img-opt').forEach(function(o){
+    o.style.pointerEvents='none';
+    if(o.getAttribute('data-correct-img')!==null)o.classList.add('correct');
+  });
+  if(!isCorrect)btn.classList.add('wrong');
+  var fb=document.getElementById('fb-'+qid);
+  if(isCorrect){score++;fb.textContent='✅ Correct!';fb.className='feedback show ok';}
+  else{fb.textContent='❌ Check the green card for the right answer!';fb.className='feedback show nope';}
+  updateScore();checkDone();
+}
+
+function updateScore(){
+  var t=Object.keys(answered).length;
+  document.getElementById('score-txt').textContent=score+' / '+t;
+  document.getElementById('score-fill').style.width=(score/10*100)+'%';
+}
+
+function checkDone(){
+  if(Object.keys(answered).length<10)return;
+  var r=document.getElementById('quiz-result');r.style.display='block';
+  var p=score/10;
+  var em=document.getElementById('result-emoji'),ti=document.getElementById('result-title'),ms=document.getElementById('result-msg');
+  if(p>=0.9){em.textContent='🏆';ti.textContent='Excellent!';ms.textContent='You\'re ready to navigate Brussels in French!';}
+  else if(p>=0.7){em.textContent='🎉';ti.textContent='Très bien!';ms.textContent='Great job — keep practising!';}
+  else if(p>=0.5){em.textContent='👍';ti.textContent='Pas mal!';ms.textContent='Good effort! Re-watch the videos and try again.';}
+  else{em.textContent='💪';ti.textContent='Keep going!';ms.textContent='Don\'t worry — watch the videos again and retake the quiz!';}
+}
+</script>
+</body>
+</html>
