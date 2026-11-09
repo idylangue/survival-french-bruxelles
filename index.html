@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Survival French Bruxelles</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'DM Sans',sans-serif;background:#f7f6f2;color:#1a1a1a;line-height:1.6;display:flex;flex-direction:column;min-height:100vh}
+
+/* HERO */
+.hero{background:#1a3a2a;color:#fff;padding:2.8rem 1.5rem 2.2rem;text-align:center}
+.hero h1{font-family:'DM Sans',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-0.5px;margin-bottom:0.5rem}
+.hero .tagline{color:#c0dfc9;font-size:0.95rem;font-weight:500;margin-bottom:0.7rem}
+.hero p.desc{color:rgba(255,255,255,0.78);font-size:0.92rem;max-width:560px;margin:0 auto;line-height:1.55}
+
+/* MAIN */
+main{flex:1;padding:1.8rem 1rem 2rem;max-width:760px;margin:0 auto;width:100%}
+
+.section-label{font-size:0.72rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#1a3a2a;margin:0 0 1rem 2px}
+
+/* TOOL CARDS GRID */
+.tools-grid{display:grid;grid-template-columns:1fr;gap:0.85rem}
+@media(min-width:620px){.tools-grid{grid-template-columns:1fr 1fr}}
+
+.tool-card{background:#fff;border:1px solid #e5e5e0;border-radius:14px;padding:1.3rem 1.3rem 1.2rem;text-decoration:none;color:inherit;display:block;transition:all 0.18s ease;position:relative;overflow:hidden}
+.tool-card:hover{border-color:#1a3a2a;transform:translateY(-2px);box-shadow:0 6px 18px rgba(26,58,42,0.09)}
+.tool-card:active{transform:translateY(0)}
+
+.tool-icon{width:52px;height:52px;background:#eef3ec;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.65rem;margin-bottom:0.9rem;transition:background 0.18s}
+.tool-card:hover .tool-icon{background:#d9e7dc}
+
+.tool-title{font-size:1rem;font-weight:600;color:#1a3a2a;margin-bottom:0.35rem;line-height:1.3}
+.tool-desc{font-size:0.83rem;color:#5a6b60;line-height:1.5;margin-bottom:0.7rem}
+
+.tool-meta{display:flex;align-items:center;justify-content:space-between;font-size:0.72rem;color:#9aa49e}
+.tool-tag{background:#f4f3ee;color:#5a6b60;padding:2px 9px;border-radius:12px;font-weight:500}
+.tool-arrow{color:#1a3a2a;font-weight:500;font-size:0.82rem}
+
+/* CATEGORY SEPARATORS */
+.category{margin-top:2.2rem}
+.category:first-child{margin-top:0}
+
+/* FOOTER */
+footer{padding:1.4rem 1rem 1.2rem;text-align:right;max-width:760px;margin:0 auto;width:100%}
+footer .by{font-size:0.74rem;color:#aaa;font-weight:500;letter-spacing:0.04em}
+footer .by a{color:#aaa;text-decoration:none;border-bottom:1px dotted #ccc}
+footer .by a:hover{color:#1a3a2a;border-bottom-color:#1a3a2a}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Survival French Bruxelles</h1>
+  <div class="tagline">Discover Brussels · Speak French</div>
+  <p class="desc">A set of pedagogical tools for beginners discovering Brussels. Observation, play, culture, language — designed for exchange students and newcomers to the city.</p>
+</div>
+
+<main>
+  <div id="tools-container"></div>
+</main>
+
+<footer>
+  <div class="by">by <a href="https://idylangue.com" target="_blank" rel="noopener">Idylangue</a></div>
+</footer>
+
+<script>
+var TOOLS = [
+  {
+    category: "Observation & Discovery",
+    items: [
+      {
+        icon: "👀",
+        title: "Observation Guide",
+        desc: "Open your eyes and ears in Brussels — a self-guided observation week.",
+        url: "survival-french-brussels.html",
+        tag: "A1 · self-guided"
+      }
+    ]
+  },
+  {
+    category: "Culture & Visits",
+    items: [
+      {
+        icon: "🏛️",
+        title: "Museum Guide — Migration Museum",
+        desc: "Guided visit to the Migration Museum: reflect, watch, present a person in French.",
+        url: "musee.html",
+        tag: "A1-A2 · in situ"
+      }
+    ]
+  },
+  {
+    category: "Play & Explore",
+    items: [
+      {
+        icon: "🚇",
+        title: "Lost in the Subway",
+        desc: "An interactive scavenger hunt in the Brussels metro — in French.",
+        url: "https://lostinthesubway.netlify.app/",
+        tag: "A1-A2 · game"
+      }
+    ]
+  },
+  {
+    category: "Practice & Test",
+    items: [
+      {
+        icon: "🃏",
+        title: "Vocabulary Flashcards",
+        desc: "Interactive flashcards to learn and review essential Brussels vocabulary.",
+        url: "https://astonishing-stroopwafel-c7149f.netlify.app/",
+        tag: "A1 · flashcards"
+      },
+      {
+        icon: "🎯",
+        title: "Brussels Quiz",
+        desc: "Test your knowledge of Brussels — culture, places, and expressions.",
+        url: "https://hilarious-sfogliatella-515863.netlify.app/",
+        tag: "A1-A2 · quiz"
+      }
+    ]
+  }
+];
+
+function render() {
+  var container = document.getElementById('tools-container');
+  var html = '';
+  TOOLS.forEach(function(cat) {
+    html += '<div class="category">';
+    html += '<div class="section-label">' + cat.category + '</div>';
+    html += '<div class="tools-grid">';
+    cat.items.forEach(function(tool) {
+      var isExternal = tool.url.indexOf('http') === 0;
+      var target = isExternal ? ' target="_blank" rel="noopener"' : '';
+      html += '<a class="tool-card" href="' + tool.url + '"' + target + '>'
+        + '<div class="tool-icon">' + tool.icon + '</div>'
+        + '<div class="tool-title">' + tool.title + '</div>'
+        + '<div class="tool-desc">' + tool.desc + '</div>'
+        + '<div class="tool-meta">'
+        + '<span class="tool-tag">' + tool.tag + '</span>'
+        + '<span class="tool-arrow">Open ' + (isExternal ? '↗' : '→') + '</span>'
+        + '</div></a>';
+    });
+    html += '</div></div>';
+  });
+  container.innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>

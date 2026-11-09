@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Museum Guide · Migration · Survival French Bruxelles</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f7f6f2;color:#1a1a1a;line-height:1.6;padding-bottom:40px}
+
+/* HERO */
+.hero{background:#1a3a2a;color:#fff;padding:2.2rem 1.5rem 1.8rem;text-align:center}
+.hero h1{font-size:1.7rem;font-weight:700;letter-spacing:-0.3px;margin-bottom:0.35rem}
+.hero p{color:rgba(255,255,255,0.75);font-size:0.9rem;max-width:480px;margin:0 auto}
+
+/* BACK LINK */
+.back-bar{max-width:720px;margin:0 auto;padding:1rem 1rem 0}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:#1a3a2a;text-decoration:none;font-size:0.85rem;font-weight:500}
+.back-link:hover{text-decoration:underline}
+
+/* CONTAINER */
+.wrap{max-width:720px;margin:0 auto;padding:1rem 1rem 1.4rem}
+
+/* SECTION TITLES */
+.divider-label{font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#1a3a2a;margin:1.6rem 0 0.7rem}
+
+/* CARD */
+.card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1.2rem 1.3rem;margin-bottom:0.85rem}
+.card h3{font-size:0.95rem;font-weight:600;color:#1a3a2a;margin-bottom:0.6rem}
+.card p{font-size:0.88rem;color:#444;line-height:1.65;margin-bottom:0.6rem}
+.card p:last-child{margin-bottom:0}
+.card ul{margin:0.5rem 0 0.5rem 1.1rem}
+.card li{font-size:0.86rem;color:#444;margin-bottom:0.35rem}
+
+/* INTRO BANNER */
+.intro-banner{background:#1a3a2a;border-radius:12px;padding:1.3rem 1.4rem;margin-bottom:1rem}
+.intro-label{font-size:0.68rem;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:#c0dfc9;margin-bottom:0.5rem}
+.intro-banner p{font-size:0.95rem;color:#fff;line-height:1.6}
+
+/* QUESTION BLOCKS */
+.q-block{background:#eef7f1;border-left:3px solid #4a9060;border-radius:0 8px 8px 0;padding:0.8rem 1.1rem;margin-bottom:0.7rem}
+.q-block .q-title{font-size:0.84rem;font-weight:600;color:#1a3a2a;margin-bottom:0.3rem}
+.q-block p{font-size:0.85rem;color:#2a4a3a;line-height:1.55}
+
+/* YOUTUBE / VIDEO CARD */
+.yt-card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;overflow:hidden;margin-bottom:0.85rem;text-decoration:none;display:block;transition:border-color 0.15s}
+.yt-card:hover{border-color:#1a3a2a}
+.yt-thumb{width:100%;height:180px;object-fit:cover;background:#000;display:block}
+.yt-bar{padding:0.8rem 1rem;display:flex;align-items:center;gap:10px}
+.yt-icon{width:34px;height:34px;background:#1a3a2a;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.85rem;flex-shrink:0}
+.yt-title{font-size:0.88rem;font-weight:600;color:#1a3a2a}
+.yt-sub{font-size:0.74rem;color:#9aa49e;margin-top:1px}
+
+/* PRESENTATION TEMPLATE */
+.present-card{background:#fff;border:1px solid #e5e5e0;border-radius:12px;padding:1.2rem 1.3rem;margin-bottom:0.85rem}
+.present-card h3{font-size:0.95rem;font-weight:600;color:#1a3a2a;margin-bottom:0.3rem}
+.present-sub{font-size:0.82rem;color:#9aa49e;margin-bottom:0.9rem}
+.present-line{display:flex;align-items:center;gap:8px;padding:0.55rem 0.9rem;background:#f4f3ee;border-radius:8px;margin-bottom:6px;font-size:0.9rem;color:#1a3a2a;font-weight:500}
+.present-line .blank{flex:1;border-bottom:1.5px dotted #a8b8ad;min-height:1.1em;margin-left:6px}
+.voila{text-align:center;font-size:1rem;font-weight:600;color:#4a9060;margin-top:0.8rem}
+
+/* RECORD CARD */
+.record-card{background:#fff;border:1px solid #e5e5e0;border-left:3px solid #4a9060;border-radius:0 12px 12px 0;padding:1rem 1.2rem;margin-bottom:0.85rem}
+.record-label{font-size:0.67rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:#4a9060;margin-bottom:0.3rem}
+.record-card p{font-size:0.86rem;color:#333}
+
+/* FOOTER BADGE */
+.footer-badge{text-align:right;max-width:720px;margin:1.6rem auto 0;padding:0 1rem;font-size:0.74rem;color:#aaa;font-weight:500}
+.footer-badge a{color:#aaa;text-decoration:none;border-bottom:1px dotted #ccc}
+.footer-badge a:hover{color:#1a3a2a;border-bottom-color:#1a3a2a}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Museum Guide</h1>
+  <p>Musée de la Migration · Brussels, a cosmopolitan city</p>
+</div>
+
+<div class="back-bar">
+  <a class="back-link" href="index.html">← Back to all tools</a>
+</div>
+
+<div class="wrap">
+
+  <div class="intro-banner">
+    <div class="intro-label">Before you go</div>
+    <p>Brussels is a multicultural, cosmopolitan city — full of diversity. But concretely, what does that mean? Living together, or segregation? Open your eyes and your ears at the Migration Museum.</p>
+  </div>
+
+  <div class="divider-label">🧭 Think about it</div>
+
+  <div class="card">
+    <h3>The different types of migration</h3>
+    <p>At the museum, pay attention to the different migration profiles. Which words go with which profile?</p>
+    <ul>
+      <li>Socio-economic migrant</li>
+      <li>Refugee</li>
+      <li>Expat</li>
+      <li>Migrant</li>
+    </ul>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">What do they have in common?</div>
+    <p>Learning the language · finding housing · cultural adaptation · intercultural challenges</p>
+  </div>
+
+  <div class="q-block">
+    <div class="q-title">What is different?</div>
+    <p>Social status · access to economic resources</p>
+  </div>
+
+  <div class="card">
+    <h3>The effects of migration — and you?</h3>
+    <p>The US is also a country of migration. What are your own personal migration stories?</p>
+  </div>
+
+  <div class="divider-label">🎬 Watch & listen</div>
+
+  <a class="yt-card" href="https://www.youtube.com/watch?v=uOp9VoOfCTY" target="_blank" rel="noopener">
+    <img class="yt-thumb" src="https://img.youtube.com/vi/uOp9VoOfCTY/hqdefault.jpg" alt="Témoignages">
+    <div class="yt-bar">
+      <div class="yt-icon">▶</div>
+      <div>
+        <div class="yt-title">Témoignages — Voices of migration</div>
+        <div class="yt-sub">Watch on YouTube →</div>
+      </div>
+    </div>
+  </a>
+
+  <a class="yt-card" href="https://mmm.brussels/wp-content/uploads/2023/04/Van-Parijs.mp4" target="_blank" rel="noopener">
+    <div class="yt-bar">
+      <div class="yt-icon">▶</div>
+      <div>
+        <div class="yt-title">Bruxelles, une ville cosmopolite — Van Parijs</div>
+        <div class="yt-sub">Diversité linguistique · opens in a new tab →</div>
+      </div>
+    </div>
+  </a>
+
+  <div class="divider-label">🗣️ Present a person</div>
+
+  <div class="card">
+    <h3>Your mission</h3>
+    <p>Choose a person, an image, or a statement from the exhibition that caught your attention. Present them in French using the template below.</p>
+  </div>
+
+  <div class="present-card">
+    <h3>Presentation template</h3>
+    <div class="present-sub">Fill in the blanks and say it out loud</div>
+    <div class="present-line">Il·elle s'appelle <span class="blank"></span></div>
+    <div class="present-line">Il·elle vient de <span class="blank"></span></div>
+    <div class="present-line">Il·elle est <span class="blank"></span> (nationalité)</div>
+    <div class="present-line">Il·elle est <span class="blank"></span> (job)</div>
+    <div class="present-line">Il·elle parle <span class="blank"></span></div>
+    <div class="present-line">Il·elle habite à Bruxelles depuis <span class="blank"></span></div>
+    <div class="present-line">Il·elle habite à <span class="blank"></span> (commune)</div>
+    <div class="present-line">Il·elle a <span class="blank"></span> (objet)</div>
+    <div class="present-line">Il·elle aime <span class="blank"></span></div>
+    <div class="voila">Voilà ! 🎉</div>
+  </div>
+
+  <div class="record-card">
+    <div class="record-label">🎙 Record yourself</div>
+    <p>Record your presentation in French and take a photo of the person, image, or statement you chose — for a little montage afterwards! 📸</p>
+  </div>
+
+</div>
+
+<div class="footer-badge">
+  by <a href="https://idylangue.com" target="_blank" rel="noopener">Idylangue</a>
+</div>
+
+</body>
+</html>
